@@ -200,10 +200,7 @@ def skeletonThinningHomotopic(img, neighbourhood_pattern):
     # pour vérifier l'idempotance on utilise squelette qui sera une copie de squeletteN
     squelette = np.array(img, dtype=int)
     
-    neighbourhood_pattern = [[2, 0, 0],
-                           [1, 1, 0],
-                           [2, 1, 2]]
-
+    
 
     counter = 0
     counter_similarity = 0
@@ -247,7 +244,3 @@ def neighbourhoodRotate(neighbourhood_pattern):
  
     return rotated
 
-def wait():
-    input("Press Enter to continue...")
-    plt.close('all')
-        

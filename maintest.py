@@ -18,6 +18,7 @@ def  testSeuillage(seuil):
         wait()
         
         
+        
 
 def testAddition():
         chemin_img2 = "./cercle.jpg"
@@ -94,9 +95,21 @@ def testSqueletteLantuejoul():
         plt.imshow(img, cmap=plt.cm.gray)
         plt.title("Image après squelettion")
         wait()
-        
-def testAmincissementHomotopique():
-        
+
+np1 = np.array([[2, 0,0],
+                [1, 1, 0],
+                [2, 1, 2]]) #meilleur
+
+np2 = np.array([[2, 1,0],
+                [1, 1, 0],
+                [2, 1, 2]]) #fractal
+
+np3 = np.array([[2, 0,2],[1, 1, 1],[1, 1, 2]])
+
+np4 = np.array([[0, 0,0],[2, 1, 2],[1, 1, 1]])
+
+def testAmincissementHomotopique(neighbourhood_pattern):
+                   
         chemin_img = "./lena.jpg"
         img = mpimg.imread(chemin_img)
         img = thresholdingImage(img, 128)
@@ -104,8 +117,14 @@ def testAmincissementHomotopique():
         plt.imshow(img, cmap=plt.cm.gray)
         plt.title("Image to test amincissment")
         plt.figure(2).show()
-        img = skeletonThinningHomotopic(img)
+        img = skeletonThinningHomotopic(img, neighbourhood_pattern)
         plt.imshow(img, cmap=plt.cm.gray)
         plt.title("Image après amincissment homotopique")
+        plt.show()
         wait()
 
+def wait():
+    input("Press Enter to continue...")
+    plt.close("all")
+
+testAmincissementHomotopique(np2)
