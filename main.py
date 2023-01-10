@@ -1,76 +1,48 @@
 
+from maintest import *
 
-from listeFonction import *
-import matplotlib.image as mpimg
-import matplotlib.pyplot as plt
+menu_options = {
+    1: 'Seuillage',
+    2: 'Addition',
+    3: 'Soustraction',
+    4: 'Erosion',
+    5: 'Dilatation',
+    6: 'Lantuejoul',
+    7: 'Amincissement Homotopique',
+    8: 'Exit',
+}
 
-struc = np.array([[0, 0, 0],
-                  [2, 1, 2],
-                  [1, 1, 1]])
-
-chemin_img = "./lena.jpg"
-
-img = mpimg.imread(chemin_img)
-
-
-if img.ndim == 3:
-    img = rgb2gray(img)
-
-plt.figure(1)
-#plt.imshow(img, cmap='gray')
-plt.imshow(img, cmap=plt.cm.gray)
-plt.title("Image to test seuil")
+def print_menu():
+    for key in menu_options.keys():
+        print (key, '--', menu_options[key] )
 
 
-plt.figure(2)
-img = thresholdingImage(img, 128)
-#img= additionOfTwoImages(img, img2)
-plt.imshow(img, cmap=plt.cm.gray)
-plt.title("Image après seuil")
+while(True):
+        print_menu()
+        option = ''
+        try:
+            option = int(input('Enter your choice: '))
+        except:
+            print('Wrong input.  Please enter a number ...')
+        #Check what choice was entered and act accordingly
+        
 
-
-plt.figure(11)
-img11 = skeleton_thinning_homotopic(img)
-plt.imshow(img11, cmap=plt.cm.gray)
-plt.title("Image amincie homotopique")
-
-
-'''
-plt.figure(3)
-img3 = thickening(img)
-plt.imshow(img3, cmap=plt.cm.gray)
-plt.title("Image après 'épaississement")
-
-plt.figure(4)
-img4 = thinning(img,struc)
-plt.imshow(img4, cmap=plt.cm.gray)
-plt.title("Image après amincississement")
-
-plt.figure(4)
-img4 = slimming(img)
-plt.imshow(img4, cmap=plt.cm.gray)
-plt.title("Image après amincississement")
-
-
-
-
-plt.figure(7)
-img7= lantuejoulSkeleton(img,100) 
-plt.imshow(img7, cmap=plt.cm.gray)
-plt.title("Skeletonization")
-
-plt.figure(5)
-img1 = erodeBinaryImage(img,4)
-plt.imshow(img1, cmap=plt.cm.gray)
-plt.title("erode test")
-
-plt.figure(6)
-img2 = dilateBinaryImage(img,4)
-plt.imshow(img2, cmap=plt.cm.gray)
-plt.title("dilate test")
-
-
-
-'''
-plt.show()
-    
+        if option == 1:
+           testSeuillage(128)
+        elif option == 2:
+            testAddition()
+        elif option == 3:
+            testSoustraction()
+        elif option == 4:
+            testErosion()
+        elif option == 5:
+            testDilatation()
+        elif option == 6:
+            testSqueletteLantuejoul()
+        elif option == 7:
+            testAmincissementHomotopique()
+        elif option == 8:
+            exit() # fonction python qui permet de quitter le programme
+        else:
+            print('\nInvalid option!\n ')
+            input("Press Enter to continue...")

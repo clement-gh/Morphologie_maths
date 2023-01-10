@@ -1,6 +1,7 @@
 import numpy as np 
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 
-#import pathlib
 
 
 def rgb2gray(rgb):
@@ -12,6 +13,9 @@ def rgb2gray(rgb):
 
 # Seuillage d'une image
 def thresholdingImage(img,threshold):
+    
+    if img.ndim == 3:
+        img = rgb2gray(img)
 
     new_img = np.zeros(img.shape)
     new_img[img <= threshold] = 0
@@ -22,7 +26,7 @@ def thresholdingImage(img,threshold):
 def additionOfTwoImages(img1, img2):
    # assert img1.shape == img2.shape, "Les deux images doivent avoir les mêmes dimensions"
     img = (img1 + img2)
-    img[img > 255] = 255
+    img[img > 1] = 1
     
     return img
 
@@ -86,21 +90,16 @@ def opening(img):
     return open_img
 
 
-def lantuejoulSkeleton(img,iteration=40):
-    #TODO: tester sans la première itération
+def lantuejoulSkeleton(img):
 
     # on crée une image remplie de 0
     img_full = np.zeros((len(img),len(img[0]) ),dtype=int)
     img_skeleton = np.zeros((len(img),len(img[0]) ),dtype=int)
-    n = 0
-    imgErodedSize_n = erodeBinaryImage(img,n)
-    imgOpen = opening(imgErodedSize_n)
-    imgSub = subtractionOfTwoImages(imgErodedSize_n,imgOpen)
-    img_skeleton =  additionOfTwoImages(imgSub,img_skeleton)
-    print("Lantuejoul: " ,n+1)
+    
 
-    # boucle sur les itérations
-    for n in range(1, iteration -1  ):
+    # boucle 
+    n=0
+    while True:
      
         imgErodedSize_n = erodeBinaryImage(img,n)
 
@@ -190,8 +189,9 @@ def thickening(img, neighbourhood_pattern):
 
     return thickened
 
+
 #Amincissement homotopique
-def skeleton_thinning_homotopic(img):
+def skeletonThinningHomotopic(img, neighbourhood_pattern):
 
     # copier l'image dans des variables locales
     # pour éviter de modifier l'image originale lors des opérations de amincissement on utilise squeletteN
@@ -200,9 +200,9 @@ def skeleton_thinning_homotopic(img):
     # pour vérifier l'idempotance on utilise squelette qui sera une copie de squeletteN
     squelette = np.array(img, dtype=int)
     
-    neighbourhood_pattern = [[0, 0, 0],
-                           [2, 1, 2],
-                           [1, 1, 1]]
+    neighbourhood_pattern = [[2, 0, 0],
+                           [1, 1, 0],
+                           [2, 1, 2]]
 
 
     counter = 0
@@ -246,3 +246,8 @@ def neighbourhoodRotate(neighbourhood_pattern):
     # pas besoin de le changer la valeur du centre 
  
     return rotated
+
+def wait():
+    input("Press Enter to continue...")
+    plt.close('all')
+        

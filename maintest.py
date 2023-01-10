@@ -1,49 +1,111 @@
-from functions import *
+
 from listeFonction import *
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 
+def  testSeuillage(seuil):
+        chemin_img = "./lena.jpg"
+        img = mpimg.imread(chemin_img)
+        
+        
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test seuillage")
+        plt.figure(2).show()
+        img = thresholdingImage(img, seuil)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après seuillage")
+        wait()
+        
+        
 
-struc = np.array([[1,2,3],
-                  [4,5,6],
-                  [7,8,9]])
+def testAddition():
+        chemin_img2 = "./cercle.jpg"
+        chemin_img = "./rectangle.jpg"
+        img = mpimg.imread(chemin_img)
+        img2 = mpimg.imread(chemin_img2)
+        
+        img = thresholdingImage(img, 128)
+        img2 = thresholdingImage(img2, 128)
+        
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test addition")
+        plt.figure(2).show()
+        img = additionOfTwoImages(img, img2)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après addition")
+        wait()
+        
 
-print(struc[1][1])
+def testSoustraction():
+        chemin_img2 = "./cercle.jpg"
+        chemin_img = "./rectangle.jpg"
+        img = mpimg.imread(chemin_img)
+        img2 = mpimg.imread(chemin_img2)
+        
+        img = thresholdingImage(img, 128)
+        img2 = thresholdingImage(img2, 128)
+        
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test addition")
+        plt.figure(2).show()
+        img = subtractionOfTwoImages(img, img2)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après soustraction")
+        wait()
 
-def rotate_matrixe_sens_negatif(element_structurant):
-    element_structurant_rotated = np.array(element_structurant, dtype=int)
-    '''
-    Par exemple [[2, 0, 2],
-                [1, 1, 0],
-                [1, 1, 2]]
-    devient [[1, 2, 0],
-            [1, 1, 2],
-            [1, 2, 0]]
-    '''
-    #copier les éléments de la matrice (le centre non compris) dans un tableau 1d
-    #en gardant l'ordre
-    elements_matrice_1d_sans_centre = np.zeros(8, dtype=int)
+def testErosion():
+        chemin_img = "./cercle.jpg"
+        img = mpimg.imread(chemin_img)
+        img = thresholdingImage(img, 128)
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test erosion")
+        plt.figure(2).show()
+        img = erodeBinaryImage(img,20)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après erosion")
+        wait()
 
-    elements_matrice_1d_sans_centre[0] = element_structurant[0][0]
-    elements_matrice_1d_sans_centre[1] = element_structurant[0][1]
-    elements_matrice_1d_sans_centre[2] = element_structurant[0][2]
-    elements_matrice_1d_sans_centre[3] = element_structurant[1][2]
-    elements_matrice_1d_sans_centre[4] = element_structurant[2][2]
-    elements_matrice_1d_sans_centre[5] = element_structurant[2][1]
-    elements_matrice_1d_sans_centre[6] = element_structurant[2][0]
-    elements_matrice_1d_sans_centre[7] = element_structurant[1][0]
+def testDilatation():
+        chemin_img = "./cercle.jpg"
+        img = mpimg.imread(chemin_img)
+        img = thresholdingImage(img, 128)
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test dilatation")
+        plt.figure(2).show()
+        img = dilateBinaryImage(img,20)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après dilatation")
+        wait()
 
-    #appliquer la rotation
-    element_structurant_rotated[0][1] = elements_matrice_1d_sans_centre[0]
-    element_structurant_rotated[0][2] = elements_matrice_1d_sans_centre[1]
-    element_structurant_rotated[1][2] = elements_matrice_1d_sans_centre[2]
-    element_structurant_rotated[2][2] = elements_matrice_1d_sans_centre[3]
-    element_structurant_rotated[2][1] = elements_matrice_1d_sans_centre[4]
-    element_structurant_rotated[2][0] = elements_matrice_1d_sans_centre[5]
-    element_structurant_rotated[1][0] = elements_matrice_1d_sans_centre[6]
-    element_structurant_rotated[0][0] = elements_matrice_1d_sans_centre[7]
+def testSqueletteLantuejoul():
+        chemin_img = "./lena.jpg"
+        img = mpimg.imread(chemin_img)
+        img = thresholdingImage(img, 128)
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test squelette")
+        plt.figure(2).show()
+        img = lantuejoulSkeleton(img)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après squelettion")
+        wait()
+        
+def testAmincissementHomotopique():
+        
+        chemin_img = "./lena.jpg"
+        img = mpimg.imread(chemin_img)
+        img = thresholdingImage(img, 128)
+        plt.figure(1).show()
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image to test amincissment")
+        plt.figure(2).show()
+        img = skeletonThinningHomotopic(img)
+        plt.imshow(img, cmap=plt.cm.gray)
+        plt.title("Image après amincissment homotopique")
+        wait()
 
-    print("element structurant: ")
-    print(element_structurant)
-    print("element structurant rotated")
-    print(element_structurant_rotated)
-
-    return element_structurant_rotated
